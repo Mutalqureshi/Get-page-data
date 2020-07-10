@@ -1,0 +1,6 @@
+$my_id = 12784;
+$post_id_12784 = get_post($my_id);
+$content = $post_id_12784->post_content;
+$content = apply_filters('the_content', $content);
+$content = str_replace(']]>', ']]>', $content);
+echo '<div id="TermsModal" style="display:none;"><div class="modal"><div class="entry-content">'.$content.'</div></div></div>';
