@@ -34,3 +34,7 @@ function myoutputShortcode($id, $content = '')
      //wp_enqueue_style('templatera_inline', $this->assetUrl('css/front_style.css'), false, '2.1');
      return do_shortcode($output);
  }
+ 
+ 
+ get  krne ka code
+    echo myoutputShortcode(283);
