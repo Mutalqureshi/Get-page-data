@@ -4,3 +4,33 @@ $content = $post_id_12784->post_content;
 $content = apply_filters('the_content', $content);
 $content = str_replace(']]>', ']]>', $content);
 echo '<div id="TermsModal" style="display:none;"><div class="modal"><div class="entry-content">'.$content.'</div></div></div>';
+
+-- 
+new code
+----------------------------------------------------------------
+
+function myoutputShortcode($id, $content = '')
+ {
+     $output = '';
+     if (empty($id)) {
+         return $output;
+     }
+     $my_query = new WP_Query(array('post_type' => 'page', 'p' => (int) $id));
+     WPBMap::addAllMappedShortcodes();
+     while ($my_query->have_posts()) {
+         $my_query->the_post();
+         if (get_the_ID() === (int) $id) {             $key_1_value = get_post_meta( get_the_ID(), '_wpb_shortcodes_custom_css', true );
+             $vc_custom_css = '<style type="text/css">'.$key_1_value.'</style>';             //$output .= '<div class="templatera_shortcode">';
+             ob_start();
+             visual_composer()->addFrontCss();
+             $content = get_the_content();
+             echo $content;
+             echo $vc_custom_css;
+             $output .= ob_get_clean();
+             //$output .= '</div>';
+         }
+     }
+     wp_reset_query();
+     //wp_enqueue_style('templatera_inline', $this->assetUrl('css/front_style.css'), false, '2.1');
+     return do_shortcode($output);
+ }
